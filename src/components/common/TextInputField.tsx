@@ -18,7 +18,8 @@ const InputField = styled.input<{ error?: string }>`
     background: #ffffff;
     &:focus {
         outline: none;
-        border: 2px solid #ffdd5b;
+        border: ${({ error }) =>
+            error ? '2px solid #DE665B' : '2px solid #ffdd5b'};
     }
     &::placeholder {
         font-size: 14px;
