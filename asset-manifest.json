@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/project-hobby-street/static/css/main.8d54c2d8.css",
+    "main.js": "/project-hobby-street/static/js/main.ada9f690.js",
+    "index.html": "/project-hobby-street/index.html",
+    "static/media/checkbox.svg": "/project-hobby-street/static/media/checkbox.fbee44f832f76251f1ded06d8ba90ded.svg",
+    "main.8d54c2d8.css.map": "/project-hobby-street/static/css/main.8d54c2d8.css.map",
+    "main.ada9f690.js.map": "/project-hobby-street/static/js/main.ada9f690.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8d54c2d8.css",
+    "static/js/main.ada9f690.js"
+  ]
+}
