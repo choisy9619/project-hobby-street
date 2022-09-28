@@ -1,5 +1,6 @@
 import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import styled from 'styled-components';
 
 const TextWrap = styled.div`
@@ -25,7 +26,7 @@ const TextDesc = styled.div`
     color: #2e2c23;
 `;
 
-const MiddleContent: React.FC = () => {
+const Examples = () => {
     return (
         <>
             <TextWrap>
@@ -51,17 +52,17 @@ const MiddleContent: React.FC = () => {
                 showThumbs={false}
             >
                 <div>
-                    <img src="src/assets/images/card_1.svg" alt="카드1" />
+                    <img src="assets/images/card_1.svg" alt="카드1" />
                 </div>
                 <div>
-                    <img src="src/assets/images/card_2.svg" alt="카드2" />
+                    <img src="assets/images/card_2.svg" alt="카드2" />
                 </div>
                 <div>
-                    <img src="src/assets/images/card_3.svg" alt="카드3" />
+                    <img src="assets/images/card_3.svg" alt="카드3" />
                 </div>
             </Carousel>
         </>
     );
 };
 
-export default MiddleContent;
+export default Examples;
