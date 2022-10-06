@@ -2,6 +2,8 @@ import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import styled from 'styled-components';
+import { HOBBY_CARD_CONTENTS } from '../constants';
+import HobbyCardWrap from '../components/cards/HobbyCardWrap';
 
 const TextWrap = styled.div`
     display: flex;
@@ -51,15 +53,17 @@ const Examples = () => {
                 showIndicators={false}
                 showThumbs={false}
             >
-                <div>
-                    <img src="assets/images/card_1.svg" alt="카드1" />
-                </div>
-                <div>
-                    <img src="assets/images/card_2.svg" alt="카드2" />
-                </div>
-                <div>
-                    <img src="assets/images/card_3.svg" alt="카드3" />
-                </div>
+                {HOBBY_CARD_CONTENTS.map((item) => (
+                    <HobbyCardWrap
+                        key={item.id}
+                        img={item.img}
+                        title={item.title}
+                        hobbyName={item.hobbyName}
+                        bedge={item.bedge}
+                        writer={item.writer}
+                        explanation={item.explanation}
+                    />
+                ))}
             </Carousel>
         </>
     );

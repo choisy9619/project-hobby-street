@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Checkbox from '../components/common/Checkbox';
-import Modal from '../components/common/Modal';
 import TextInputField from '../components/common/TextInputField';
 import Examples from './Examples';
 import Tips from './Tips';
 import { ERROR_MESSAGE } from '../constants';
+import { isValidEmail } from '../utils/validator.util';
+import WelcomeModal from '../components/modals/WelcomeModal';
+import TermsModal from '../components/modals/TermsModal';
 
 const Wrapper = styled.div`
     width: 414px;
@@ -22,6 +24,7 @@ const Header = styled.div`
     justify-content: center;
     padding: 24px 20px;
     gap: 10px;
+
     font-size: 20px;
     font-weight: 700;
     line-height: 100%;
@@ -30,6 +33,7 @@ const Header = styled.div`
 `;
 
 const ContentWrap = styled.div`
+    font-family: 'Pretendard';
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -64,7 +68,7 @@ const UpperMainContent = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
+    gap: 20px;
 `;
 
 const InputFieldWrap = styled.div`
@@ -86,6 +90,7 @@ const CheckboxInner = styled.div`
 
 const CheckboxText = styled.div`
     margin-top: 2px;
+    font-size: 12px;
 `;
 
 const CTABtn = styled.button`
@@ -94,7 +99,7 @@ const CTABtn = styled.button`
     align-items: center;
     padding: 16px;
     gap: 10px;
-    width: 335px;
+    width: 374px;
     height: 49px;
     background-color: #ffdd5b;
     border-radius: 8px;
@@ -113,6 +118,8 @@ const ConditionText = styled.a`
 `;
 
 const MainContainer = () => {
+    const publicUrl = process.env.PUBLIC_URL;
+
     const [checked, setChecked] = useState<boolean>(false);
     const [email, setEmail] = useState<string>('');
     const [name, setName] = useState<string>('');
@@ -121,12 +128,10 @@ const MainContainer = () => {
         useState<boolean>(false);
     const [emailError, setEmailError] = useState<string>('');
     const [nameError, setNameError] = useState<string>('');
-
-    function isValidEmail(email: string) {
-        return /\S+@\S+\.\S+/.test(email);
-    }
+    const [checkboxError, setCheckboxError] = useState<string>('');
 
     const handleCheckChange = () => {
+        setCheckboxError('');
         setChecked(!checked);
     };
 
@@ -145,9 +150,10 @@ const MainContainer = () => {
     };
 
     const handleSubmit = () => {
-        if (email.length === 0 && name.length === 0) {
+        if (email.length === 0 && name.length === 0 && !checked) {
             setEmailError(ERROR_MESSAGE.EMPTY_EMAIL_ERROR);
             setNameError(ERROR_MESSAGE.EMPTY_NAME_ERROR);
+            setCheckboxError(ERROR_MESSAGE.TERMS_CHECKBOX_ERROR);
             return;
         }
 
@@ -166,6 +172,11 @@ const MainContainer = () => {
             return;
         }
 
+        if (!checked) {
+            setCheckboxError(ERROR_MESSAGE.TERMS_CHECKBOX_ERROR);
+            return;
+        }
+
         setOpenWelcomeModal(true);
     };
 
@@ -178,6 +189,18 @@ const MainContainer = () => {
     const handleCloseConditionModal = () => {
         setOpenConditionModal(false);
     };
+
+    const TermsMsg = (
+        <>
+            <CheckboxText>
+                (필수){' '}
+                <ConditionText onClick={() => setOpenConditionModal(true)}>
+                    개인정보 수정 및 이용
+                </ConditionText>
+                에 동의합니다.
+            </CheckboxText>
+        </>
+    );
 
     return (
         <>
@@ -204,31 +227,20 @@ const MainContainer = () => {
                                 onChange={handleChangeName}
                                 error={nameError || ''}
                             />
-                            <CheckboxInner>
-                                <Checkbox
-                                    checked={checked}
-                                    onChange={handleCheckChange}
-                                />
-                                <CheckboxText>
-                                    (필수){' '}
-                                    <ConditionText
-                                        onClick={() =>
-                                            setOpenConditionModal(true)
-                                        }
-                                    >
-                                        개인정보 수정 및 이용
-                                    </ConditionText>
-                                    에 동의합니다.
-                                </CheckboxText>
-                            </CheckboxInner>
+                            <Checkbox
+                                checked={checked}
+                                onChange={handleCheckChange}
+                                message={TermsMsg}
+                                error={checkboxError || ''}
+                            />
                         </InputFieldWrap>
                         <CTABtn onClick={handleSubmit}>구독하기</CTABtn>
                     </UpperMainContent>
                     <img
                         alt="hobby"
-                        src="assets/gif/animation_1.gif"
+                        src={publicUrl + '/assets/gif/animation_1.gif'}
                         height={260}
-                        width={414}
+                        width={374}
                     />
                 </ContentWrap>
                 <ContentWrap>
@@ -263,18 +275,9 @@ const MainContainer = () => {
                                 <Checkbox
                                     checked={checked}
                                     onChange={handleCheckChange}
+                                    message={TermsMsg}
+                                    error={checkboxError || ''}
                                 />
-                                <CheckboxText>
-                                    (필수){' '}
-                                    <ConditionText
-                                        onClick={() =>
-                                            setOpenConditionModal(true)
-                                        }
-                                    >
-                                        개인정보 수정 및 이용
-                                    </ConditionText>
-                                    에 동의합니다.
-                                </CheckboxText>
                             </CheckboxInner>
                         </InputFieldWrap>
                         <CTABtn onClick={handleSubmit}>구독하기</CTABtn>
@@ -285,21 +288,13 @@ const MainContainer = () => {
                 </ContentWrap>
             </Wrapper>
             {openWelcomeModal && (
-                <Modal
-                    title="🎉구독해주셔서 감사합니다!"
-                    desc={`${name}님에게 전해드릴 이야기에 대한 좀 더 자세한 내용이 담긴 환영 메일을 보내드렸어요. 지금 바로 확인해보세요!`}
-                    buttonMsg="메일함으로 이동하기"
-                    onClickToggleModal={handleCloseWelcomeModal}
-                    buttonColor="confirm"
+                <WelcomeModal
+                    name={name}
+                    onCloseWelcomeModal={handleCloseWelcomeModal}
                 />
             )}
             {openConditionModal && (
-                <Modal
-                    onClickToggleModal={handleCloseConditionModal}
-                    title="개인정보 수집 및 이용"
-                    desc="이메일 뉴스레터 발송을 위해, 이메일 주소를 수집하고 이용합니다. 수집된 정보는 발송 외 다른 목적으로 이용되지 않으며, 서비스가 종료되거나 구독을 해지할 경우 즉시 삭제됩니다."
-                    buttonMsg="닫기"
-                />
+                <TermsModal onCloseConditionModal={handleCloseConditionModal} />
             )}
         </>
     );

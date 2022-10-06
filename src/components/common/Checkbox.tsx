@@ -2,7 +2,22 @@ import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as CheckIcon } from '../../assets/icons/checkbox.svg';
 
-const CheckboxContainer = styled.div<{ checked: boolean }>`
+const Wrap = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 8px 0px;
+    gap: 10px;
+`;
+
+const UpperWrap = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+`;
+
+const IconWrap = styled.div<{ checked: boolean }>`
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -27,16 +42,34 @@ const Icon = styled(CheckIcon)<{ checked: boolean }>`
     display: ${({ checked }) => (checked ? '' : 'none')};
 `;
 
+const ErrorMsg = styled.div`
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 100%;
+    color: #de665b;
+`;
+
 interface CheckboxProps {
     checked: boolean;
     onChange: (arg: any) => void;
-    label?: string | null;
+    message?: any;
+    error?: string;
 }
-export default function Checkbox({ checked, onChange, label }: CheckboxProps) {
+export default function Checkbox({
+    checked,
+    onChange,
+    message,
+    error,
+}: CheckboxProps) {
     return (
-        <CheckboxContainer checked={checked} onClick={onChange}>
-            <Icon checked={checked} />
-            {label != null ? <label>{label}</label> : null}
-        </CheckboxContainer>
+        <Wrap>
+            <UpperWrap>
+                <IconWrap checked={checked} onClick={onChange}>
+                    <Icon checked={checked} />
+                </IconWrap>
+                <div>{message}</div>
+            </UpperWrap>
+            {error && <ErrorMsg>{error}</ErrorMsg>}
+        </Wrap>
     );
 }

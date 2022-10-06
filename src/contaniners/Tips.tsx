@@ -24,6 +24,8 @@ const TextDesc = styled.div`
 `;
 
 const Tips = () => {
+    const publicUrl = process.env.PUBLIC_URL;
+
     return (
         <>
             <TextWrap>
@@ -39,9 +41,9 @@ const Tips = () => {
             </TextWrap>
             <img
                 alt="hobby"
-                src="assets/gif/animation_2.gif"
+                src={publicUrl + '/assets/gif/animation_2.gif'}
                 height={182}
-                width={414}
+                width={374}
             />
         </>
     );
