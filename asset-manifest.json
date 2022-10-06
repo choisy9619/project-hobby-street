@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/project-hobby-street/static/css/main.8d54c2d8.css",
-    "main.js": "/project-hobby-street/static/js/main.ebec1e7f.js",
+    "main.js": "/project-hobby-street/static/js/main.275d6f50.js",
     "index.html": "/project-hobby-street/index.html",
     "static/media/checkbox.svg": "/project-hobby-street/static/media/checkbox.fbee44f832f76251f1ded06d8ba90ded.svg",
     "main.8d54c2d8.css.map": "/project-hobby-street/static/css/main.8d54c2d8.css.map",
-    "main.ebec1e7f.js.map": "/project-hobby-street/static/js/main.ebec1e7f.js.map"
+    "main.275d6f50.js.map": "/project-hobby-street/static/js/main.275d6f50.js.map"
   },
   "entrypoints": [
     "static/css/main.8d54c2d8.css",
-    "static/js/main.ebec1e7f.js"
+    "static/js/main.275d6f50.js"
   ]
 }
