@@ -26,7 +26,7 @@ const IconWrap = styled.div<{ checked: boolean }>`
     height: 24px;
     gap: 10px;
     box-sizing: border-box;
-    border: ${({ checked }) => (checked ? '' : '1.4px solid #2E2C23')};
+    border: ${({ checked }) => (checked ? '' : '1.6px solid #2E2C23')};
     border-radius: 4px;
     background: ${({ checked }) => (checked ? '#FFDD5B' : '#FFFFFF')};
     cursor: pointer;

@@ -45,7 +45,7 @@ const Examples = () => {
             </TextWrap>
             <Carousel
                 autoPlay
-                interval={1500}
+                interval={4000}
                 infiniteLoop
                 width={326}
                 showStatus={false}

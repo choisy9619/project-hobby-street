@@ -15,48 +15,49 @@
         "sourceType": "module",
         "project": ["tsconfig.json"]
     },
-    "plugins": [
-        "react",
-        "react-hooks"
-    ],
+    "plugins": ["react", "react-hooks"],
     "settings": {
         "import/resolver": {
-            "typescript":{}
+            "typescript": {}
         }
     },
     "ignorePatterns": [".eslintrc.json"],
     "overrides": [
         {
-            "files": [
-                "*.ts",
-                "*.tsx"
-            ]
+            "files": ["*.ts", "*.tsx"]
         }
     ],
     "rules": {
-        "react-hooks/rules-of-hooks":"error",
-        "react-hooks/exhaustive-deps":"warn",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
         "prettier/prettier": ["error", { "endOfLine": "auto" }],
         "@typescript-eslint/strict-boolean-expressions": 0,
-        "@typescript-eslint/explicit-function-return-type":[
+        "@typescript-eslint/restrict-template-expressions": 0,
+        "@typescript-eslint/explicit-function-return-type": [
             "warn",
             {
-                "allowExpressions":true
+                "allowExpressions": true
             }
         ],
-        "react/jsx-filename-extension":[
+        "react/jsx-filename-extension": [
             "warn",
             {
-                "extensions":[".tsx"]
+                "extensions": [".tsx"]
             }
         ],
-        "import/extensions":[
+
+        "@typescript-eslint/no-misused-promises": [
+            "error",
+            { "checksVoidReturn": { "attributes": false } }
+        ],
+
+        "import/extensions": [
             "error",
             "ignorePackages",
             {
-                "ts":"never",
-                "tsx":"never"
+                "ts": "never",
+                "tsx": "never"
             }
         ]
-            }
+    }
 }

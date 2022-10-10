@@ -8,6 +8,9 @@ import { ERROR_MESSAGE } from '../constants';
 import { isValidEmail } from '../utils/validator.util';
 import WelcomeModal from '../components/modals/WelcomeModal';
 import TermsModal from '../components/modals/TermsModal';
+import axios from 'axios';
+import ServerErrorModal from '../components/modals/ServerErrorModal';
+import AlreadyExistModal from '../components/modals/AlreadyExistModal';
 
 const Wrapper = styled.div`
     width: 414px;
@@ -77,17 +80,6 @@ const InputFieldWrap = styled.div`
     gap: 16px;
 `;
 
-const CheckboxInner = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0px;
-    gap: 8px;
-
-    width: 335px;
-    height: 24px;
-`;
-
 const CheckboxText = styled.div`
     margin-top: 2px;
     font-size: 12px;
@@ -126,6 +118,11 @@ const MainContainer = () => {
     const [openWelcomeModal, setOpenWelcomeModal] = useState<boolean>(false);
     const [openConditionModal, setOpenConditionModal] =
         useState<boolean>(false);
+    const [openAlreadyExistModal, setOpenAlreadyExistModal] =
+        useState<boolean>(false);
+    const [openServerErrorModal, setOpenServerErrorModal] =
+        useState<boolean>(false);
+
     const [emailError, setEmailError] = useState<string>('');
     const [nameError, setNameError] = useState<string>('');
     const [checkboxError, setCheckboxError] = useState<string>('');
@@ -149,7 +146,39 @@ const MainContainer = () => {
         setName(value);
     };
 
-    const handleSubmit = () => {
+    const connectToStibee = async () => {
+        const apiUrl = `${process.env.REACT_APP_STIBEE_URL}`;
+        try {
+            const response = await axios.post(
+                apiUrl,
+                {
+                    eventOccuredBy: 'SUBSCRIBER',
+                    subscribers: [{ email, name }],
+                },
+                {
+                    headers: {
+                        AccessToken:
+                            '31aefa3bce9d6da9dd1a7906976d359179d146e068508134c9f0ca386edc2047af48c11eb22fe0fe7366a2a66655517ce6119b93c99a4b4cc7d6717a0b23633a',
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+
+            // 주소록 추가 성공 시
+            if (response.data.Value.success.length) {
+                setOpenWelcomeModal(true);
+                // 주소록에 이미 존재하는 email
+            } else if (response.data.Value.failExistEmail.length) {
+                setOpenAlreadyExistModal(true);
+            } else {
+                setOpenServerErrorModal(true);
+            }
+        } catch (e) {
+            setOpenServerErrorModal(true);
+        }
+    };
+
+    const handleSubmit = async () => {
         if (email.length === 0 && name.length === 0 && !checked) {
             setEmailError(ERROR_MESSAGE.EMPTY_EMAIL_ERROR);
             setNameError(ERROR_MESSAGE.EMPTY_NAME_ERROR);
@@ -177,7 +206,7 @@ const MainContainer = () => {
             return;
         }
 
-        setOpenWelcomeModal(true);
+        await connectToStibee();
     };
 
     const handleCloseWelcomeModal = () => {
@@ -186,8 +215,20 @@ const MainContainer = () => {
         setName('');
         setChecked(false);
     };
+
     const handleCloseConditionModal = () => {
         setOpenConditionModal(false);
+    };
+
+    const handleCloseAlreadyExistModal = () => {
+        setOpenAlreadyExistModal(false);
+        setEmail('');
+        setName('');
+        setChecked(false);
+    };
+
+    const handleCloseServerErrorModal = () => {
+        setOpenServerErrorModal(false);
     };
 
     const TermsMsg = (
@@ -271,14 +312,12 @@ const MainContainer = () => {
                                 onChange={handleChangeName}
                                 error={nameError || ''}
                             />
-                            <CheckboxInner>
-                                <Checkbox
-                                    checked={checked}
-                                    onChange={handleCheckChange}
-                                    message={TermsMsg}
-                                    error={checkboxError || ''}
-                                />
-                            </CheckboxInner>
+                            <Checkbox
+                                checked={checked}
+                                onChange={handleCheckChange}
+                                message={TermsMsg}
+                                error={checkboxError || ''}
+                            />
                         </InputFieldWrap>
                         <CTABtn onClick={handleSubmit}>구독하기</CTABtn>
                     </UpperMainContent>
@@ -295,6 +334,16 @@ const MainContainer = () => {
             )}
             {openConditionModal && (
                 <TermsModal onCloseConditionModal={handleCloseConditionModal} />
+            )}
+            {openAlreadyExistModal && (
+                <AlreadyExistModal
+                    onCloseAlreadyExistModal={handleCloseAlreadyExistModal}
+                />
+            )}
+            {openServerErrorModal && (
+                <ServerErrorModal
+                    onCloseServerModal={handleCloseServerErrorModal}
+                />
             )}
         </>
     );
