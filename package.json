@@ -27,6 +27,7 @@
         "predeploy": "npm run build",
         "deploy": "gh-pages -d build"
     },
+    "homepage": "https://hobby-street.netlify.app/",
     "eslintConfig": {
         "extends": [
             "react-app",
