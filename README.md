@@ -1,3 +1,28 @@
-# project-hobby-street
+# 🏄 project-hobby-street
 
-▶︎ temp 사이트 : https://choisy9619.github.io/project-hobby-street/
+👩‍💻 SIDE_PROJECT - 취미 아티클 Event Page 구현
+
+🗓 기간 : 2022.09.28 ~ 2022.10.08
+
+🤹‍♀️ 개발 인원 : UX 디자이너 (도영님) + 프론트엔드 개발자 (서영(나))
+
+🚀 배포 사이트 : https://choisy9619.github.io/project-hobby-street/
+
+---
+
+### `📝 회고록`
+
+사이드 프로젝트의 초기 멤버로 Event Page 제작까지 참여했습니다. (현재는 APP 개발에 주력 중..)  
+취미가 없는, 취미에 흥미를 갖기 어려운 직장인/현대인들에게 매주 취미를 소개하는 아티클을 보내주는 프로젝트로, 초기 구독자 수를 늘리기 위한 단계가 필요했고, 이를 위해 Event Page 제작이 시작되었습니다.
+
+`컴포넌트(Input, Button, Modal, CheckBox)직접 제작`  
+ 한 페이지였지만 짧은 시간내에 제작해야 했기에 컴포넌트에 집중하여 작업했습니다.  
+ 라이브러리를 사용하지 않고, 재사용성이 높은 컴포넌트를 만들고자 노력했습니다.
+
+`디자이너와의 소통 & 디자인 QA 작업`  
+기획과 디자인을 함께 하고 계신 도영님과 짧은 시간동안 결과물을 얻기 위해 지속적인 소통을 했습니다.  
+[🔆 소통 내용](https://www.notion.so/2aa1272ebf094766a00181277236560b) 서로 피드백을 해주면서 하나하나 고쳐나갔고, v1.0 배포를 완료할 수 있었습니다.
+
+---
+
+contact : choisy9619@gmail.com
