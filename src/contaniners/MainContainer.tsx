@@ -11,6 +11,8 @@ import TermsModal from '../components/modals/TermsModal';
 import axios from 'axios';
 import ServerErrorModal from '../components/modals/ServerErrorModal';
 import AlreadyExistModal from '../components/modals/AlreadyExistModal';
+import addMember from '../api/mainApi';
+
 
 const Wrapper = styled.div`
     width: 414px;
@@ -147,23 +149,9 @@ const MainContainer = () => {
     };
 
     const connectToStibee = async () => {
-        const apiUrl = `${process.env.REACT_APP_STIBEE_URL}`;
         try {
-            const response = await axios.post(
-                apiUrl,
-                {
-                    eventOccuredBy: 'SUBSCRIBER',
-                    subscribers: [{ email, name }],
-                },
-                {
-                    headers: {
-                        AccessToken:
-                            '31aefa3bce9d6da9dd1a7906976d359179d146e068508134c9f0ca386edc2047af48c11eb22fe0fe7366a2a66655517ce6119b93c99a4b4cc7d6717a0b23633a',
-                        'Content-Type': 'application/json',
-                    },
-                }
-            );
-
+            const response = await addMember({ email, name });
+            console.log(response);
             // 주소록 추가 성공 시
             if (response.data.Value.success.length) {
                 setOpenWelcomeModal(true);
@@ -177,7 +165,6 @@ const MainContainer = () => {
             setOpenServerErrorModal(true);
         }
     };
-
     const handleSubmit = async () => {
         if (email.length === 0 && name.length === 0 && !checked) {
             setEmailError(ERROR_MESSAGE.EMPTY_EMAIL_ERROR);
