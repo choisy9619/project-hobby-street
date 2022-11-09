@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ERROR_MESSAGE } from '../constants';
 import { isValidEmail } from '../utils/validator.util';
-import Tips from './Tips';
-import Examples from './Examples';
+import Tips from '../contaniners/Tips';
+import Examples from '../contaniners/Examples';
 import addMember from '../api/mainApi';
 import TermsModal from '../components/modals/TermsModal';
 import WelcomeModal from '../components/modals/WelcomeModal';
 import ServerErrorModal from '../components/modals/ServerErrorModal';
 import AlreadyExistModal from '../components/modals/AlreadyExistModal';
-import SubmissionContainer from './SubmissionContainer';
+import SubmissionContainer from '../contaniners/SubmissionContainer';
 
 const Wrapper = styled.div`
     width: 414px;
