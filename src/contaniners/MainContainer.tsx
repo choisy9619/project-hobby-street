@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Checkbox from '../components/common/Checkbox';
-import TextInputField from '../components/common/TextInputField';
-import Examples from './Examples';
-import Tips from './Tips';
 import { ERROR_MESSAGE } from '../constants';
 import { isValidEmail } from '../utils/validator.util';
-import WelcomeModal from '../components/modals/WelcomeModal';
+import Tips from './Tips';
+import Examples from './Examples';
+import addMember from '../api/mainApi';
 import TermsModal from '../components/modals/TermsModal';
-import axios from 'axios';
+import WelcomeModal from '../components/modals/WelcomeModal';
 import ServerErrorModal from '../components/modals/ServerErrorModal';
 import AlreadyExistModal from '../components/modals/AlreadyExistModal';
-import addMember from '../api/mainApi';
-
+import SubmissionContainer from './SubmissionContainer';
 
 const Wrapper = styled.div`
     width: 414px;
@@ -74,41 +71,6 @@ const UpperMainContent = styled.div`
     flex-direction: column;
     align-items: center;
     gap: 20px;
-`;
-
-const InputFieldWrap = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-`;
-
-const CheckboxText = styled.div`
-    margin-top: 2px;
-    font-size: 12px;
-`;
-
-const CTABtn = styled.button`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 16px;
-    gap: 10px;
-    width: 374px;
-    height: 49px;
-    background-color: #ffdd5b;
-    border-radius: 8px;
-    font-size: 17px;
-    font-weight: 600;
-    line-height: 100%;
-    text-align: center;
-    color: #2e2c23;
-    border: none;
-    cursor: pointer;
-`;
-
-const ConditionText = styled.a`
-    text-decoration: underline;
-    cursor: pointer;
 `;
 
 const MainContainer = () => {
@@ -218,18 +180,6 @@ const MainContainer = () => {
         setOpenServerErrorModal(false);
     };
 
-    const TermsMsg = (
-        <>
-            <CheckboxText>
-                (필수){' '}
-                <ConditionText onClick={() => setOpenConditionModal(true)}>
-                    개인정보 수정 및 이용
-                </ConditionText>
-                에 동의합니다.
-            </CheckboxText>
-        </>
-    );
-
     return (
         <>
             <Wrapper>
@@ -242,27 +192,19 @@ const MainContainer = () => {
                         </TextDesc>
                     </TextWrap>
                     <UpperMainContent>
-                        <InputFieldWrap>
-                            <TextInputField
-                                placeholder="이메일 주소"
-                                value={email}
-                                onChange={handleChangeEmail}
-                                error={emailError || ''}
-                            />
-                            <TextInputField
-                                placeholder="닉네임 또는 이름"
-                                value={name}
-                                onChange={handleChangeName}
-                                error={nameError || ''}
-                            />
-                            <Checkbox
-                                checked={checked}
-                                onChange={handleCheckChange}
-                                message={TermsMsg}
-                                error={checkboxError || ''}
-                            />
-                        </InputFieldWrap>
-                        <CTABtn onClick={handleSubmit}>구독하기</CTABtn>
+                        <SubmissionContainer
+                            name={name}
+                            email={email}
+                            checked={checked}
+                            nameError={nameError}
+                            emailError={emailError}
+                            checkboxError={checkboxError}
+                            onSubmit={handleSubmit}
+                            onChangeName={handleChangeName}
+                            onCheckChange={handleCheckChange}
+                            onChangeEmail={handleChangeEmail}
+                            setOpenConditionModal={setOpenConditionModal}
+                        />
                     </UpperMainContent>
                     <img
                         alt="hobby"
@@ -286,27 +228,19 @@ const MainContainer = () => {
                         </TextTitle>
                     </TextWrap>
                     <UpperMainContent>
-                        <InputFieldWrap>
-                            <TextInputField
-                                placeholder="이메일 주소"
-                                value={email}
-                                onChange={handleChangeEmail}
-                                error={emailError || ''}
-                            />
-                            <TextInputField
-                                placeholder="닉네임 또는 이름"
-                                value={name}
-                                onChange={handleChangeName}
-                                error={nameError || ''}
-                            />
-                            <Checkbox
-                                checked={checked}
-                                onChange={handleCheckChange}
-                                message={TermsMsg}
-                                error={checkboxError || ''}
-                            />
-                        </InputFieldWrap>
-                        <CTABtn onClick={handleSubmit}>구독하기</CTABtn>
+                        <SubmissionContainer
+                            name={name}
+                            email={email}
+                            checked={checked}
+                            nameError={nameError}
+                            emailError={emailError}
+                            checkboxError={checkboxError}
+                            onSubmit={handleSubmit}
+                            onChangeName={handleChangeName}
+                            onCheckChange={handleCheckChange}
+                            onChangeEmail={handleChangeEmail}
+                            setOpenConditionModal={setOpenConditionModal}
+                        />
                     </UpperMainContent>
                 </ContentWrap>
                 <ContentWrap>

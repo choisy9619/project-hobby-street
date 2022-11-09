@@ -33,12 +33,7 @@
         "prettier/prettier": ["error", { "endOfLine": "auto" }],
         "@typescript-eslint/strict-boolean-expressions": 0,
         "@typescript-eslint/restrict-template-expressions": 0,
-        "@typescript-eslint/explicit-function-return-type": [
-            "warn",
-            {
-                "allowExpressions": true
-            }
-        ],
+        "@typescript-eslint/explicit-function-return-type": "off",
         "react/jsx-filename-extension": [
             "warn",
             {
