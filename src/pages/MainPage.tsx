@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ERROR_MESSAGE } from '../constants';
 import { isValidEmail } from '../utils/validator.util';
-import Tips from '../contaniners/Tips';
-import Examples from '../contaniners/Examples';
 import addMember from '../api/mainApi';
 import TermsModal from '../components/modals/TermsModal';
 import WelcomeModal from '../components/modals/WelcomeModal';
 import ServerErrorModal from '../components/modals/ServerErrorModal';
 import AlreadyExistModal from '../components/modals/AlreadyExistModal';
-import SubmissionContainer from '../contaniners/SubmissionContainer';
+import TopContainer from '../contaniners/main/TopContainer';
+import MiddleContainer from '../contaniners/main/MiddleContainer';
+import BottomContainer from '../contaniners/main/BottomContainer';
 
 const Wrapper = styled.div`
     width: 414px;
@@ -34,7 +34,7 @@ const Header = styled.div`
     color: #2e2c23;
 `;
 
-const ContentWrap = styled.div`
+const InnerWrapper = styled.div`
     font-family: 'Pretendard';
     display: flex;
     flex-direction: column;
@@ -43,42 +43,11 @@ const ContentWrap = styled.div`
     margin-bottom: 40px;
 `;
 
-const TextWrap = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-`;
-
-const TextTitle = styled.div`
-    font-size: 33px;
-    font-weight: 800;
-    line-height: 150%;
-    text-align: center;
-    color: #2e2c23;
-`;
-
-const TextDesc = styled.div`
-    font-size: 17px;
-    font-weight: 600;
-    line-height: 150%;
-    text-align: center;
-    color: #2e2c23;
-`;
-
-const UpperMainContent = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-`;
-
 const MainContainer = () => {
-    const publicUrl = process.env.PUBLIC_URL;
-
     const [checked, setChecked] = useState<boolean>(false);
     const [email, setEmail] = useState<string>('');
     const [name, setName] = useState<string>('');
+
     const [openWelcomeModal, setOpenWelcomeModal] = useState<boolean>(false);
     const [openConditionModal, setOpenConditionModal] =
         useState<boolean>(false);
@@ -113,7 +82,6 @@ const MainContainer = () => {
     const connectToStibee = async () => {
         try {
             const response = await addMember({ email, name });
-            console.log(response);
             // 주소록 추가 성공 시
             if (response.data.Value.success.length) {
                 setOpenWelcomeModal(true);
@@ -127,6 +95,7 @@ const MainContainer = () => {
             setOpenServerErrorModal(true);
         }
     };
+
     const handleSubmit = async () => {
         if (email.length === 0 && name.length === 0 && !checked) {
             setEmailError(ERROR_MESSAGE.EMPTY_EMAIL_ERROR);
@@ -184,68 +153,36 @@ const MainContainer = () => {
         <>
             <Wrapper>
                 <Header>Hobby Street</Header>
-                <ContentWrap>
-                    <TextWrap>
-                        <TextTitle>그 취미, 나랑 맞을까?</TextTitle>
-                        <TextDesc>
-                            매 주 목요일, 다양한 취미 경험담을 들려드릴게요
-                        </TextDesc>
-                    </TextWrap>
-                    <UpperMainContent>
-                        <SubmissionContainer
-                            name={name}
-                            email={email}
-                            checked={checked}
-                            nameError={nameError}
-                            emailError={emailError}
-                            checkboxError={checkboxError}
-                            onSubmit={handleSubmit}
-                            onChangeName={handleChangeName}
-                            onCheckChange={handleCheckChange}
-                            onChangeEmail={handleChangeEmail}
-                            setOpenConditionModal={setOpenConditionModal}
-                        />
-                    </UpperMainContent>
-                    <img
-                        alt="hobby"
-                        src={publicUrl + '/assets/gif/animation_1.gif'}
-                        height={260}
-                        width={374}
-                    />
-                </ContentWrap>
-                <ContentWrap>
-                    <Examples />
-                </ContentWrap>
-                <ContentWrap>
-                    <Tips />
-                </ContentWrap>
-                <ContentWrap>
-                    <TextWrap>
-                        <TextTitle>
-                            해보기 전까진 모를 거에요
-                            <br />
-                            나에게 딱 맞는 취미일지
-                        </TextTitle>
-                    </TextWrap>
-                    <UpperMainContent>
-                        <SubmissionContainer
-                            name={name}
-                            email={email}
-                            checked={checked}
-                            nameError={nameError}
-                            emailError={emailError}
-                            checkboxError={checkboxError}
-                            onSubmit={handleSubmit}
-                            onChangeName={handleChangeName}
-                            onCheckChange={handleCheckChange}
-                            onChangeEmail={handleChangeEmail}
-                            setOpenConditionModal={setOpenConditionModal}
-                        />
-                    </UpperMainContent>
-                </ContentWrap>
-                <ContentWrap>
+                <TopContainer
+                    name={name}
+                    email={email}
+                    checked={checked}
+                    nameError={nameError}
+                    emailError={emailError}
+                    checkboxError={checkboxError}
+                    onSubmit={handleSubmit}
+                    onChangeName={handleChangeName}
+                    onCheckChange={handleCheckChange}
+                    onChangeEmail={handleChangeEmail}
+                    setOpenConditionModal={setOpenConditionModal}
+                />
+                <MiddleContainer />
+                <BottomContainer
+                    name={name}
+                    email={email}
+                    checked={checked}
+                    nameError={nameError}
+                    emailError={emailError}
+                    checkboxError={checkboxError}
+                    onSubmit={handleSubmit}
+                    onChangeName={handleChangeName}
+                    onCheckChange={handleCheckChange}
+                    onChangeEmail={handleChangeEmail}
+                    setOpenConditionModal={setOpenConditionModal}
+                />
+                <InnerWrapper>
                     ⓒ 2022 하비스트릿 HobbyStreet All Rights Reserved.
-                </ContentWrap>
+                </InnerWrapper>
             </Wrapper>
             {openWelcomeModal && (
                 <WelcomeModal

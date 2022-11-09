@@ -38,7 +38,7 @@ const CTABtn = styled.button`
     cursor: pointer;
 `;
 
-interface SubmissionContainerProps {
+export interface SubmissionContainerProps {
     email: string;
     name: string;
     checked: boolean;

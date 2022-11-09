@@ -1,9 +1,9 @@
 import React from 'react';
-import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import styled from 'styled-components';
-import { HOBBY_CARD_CONTENTS } from '../constants';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import HobbyCardWrap from '../components/cards/HobbyCardWrap';
+import { Carousel } from 'react-responsive-carousel';
+import { HOBBY_CARD_CONTENTS } from '../constants';
 
 const TextWrap = styled.div`
     display: flex;
